@@ -1,0 +1,318 @@
+:root { /* 103 instate of having dynamic value we have given variables to change the color  */
+  --primary-color: dodgerblue;
+  --font-color: white;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #e3e3e3;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234f4f51' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Helvetica, sans-serif;
+}
+
+.fas {
+  color: var(--font-color);
+  font-size: 35px;
+}
+
+
+.player {
+  max-width: 80vw; /* video 100, that means the video size is 80 % of the window */
+  min-width: 800px;
+  border: 5px solid black;
+  border-radius: 10px;
+  background: black;
+  position: relative;
+  cursor: pointer;
+}
+
+/* 3* we want to allocate our video in the player div becuase we we added it was bigger*/
+video {
+  border-radius: 5px;
+  width:100%; /*  this 100% is 100% of the 80% of the parent which is Player div*/
+  height: auto;
+}
+
+/* Containers */
+.show-controls {
+  width: 100%;
+  height: 30%; /* it means the show-controls takes 30% of the video  */
+/*  7 removing the blue part*/
+  /* background: dodgerblue;   we had only for experiments*/
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  cursor: default;
+}
+
+.controls-container {
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
+  height: 95px;
+  margin-top: -95px;
+  background: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  /* 6*1 */
+  opacity: 0; /*6 it means it is invisable  */
+
+
+  /*Video  6*3a  101 all=opacity  ease-out (enimation style)*/
+  transition: all 0.5s ease-out 2s; /*  it is a transition from opacity, generally how you want the opacity happens*/
+              /* duration      delay */
+}
+
+/* 6*2 */
+.show-controls:hover .controls-container { /*  this means when show-controls is hover overed, we modify the controls-container stylying*/
+  opacity: 1;
+
+  /*  6*3b this transition allws the change in opacity from 0 to 1 (these two numbers we have added see above and down here)*/
+  transition: all 0.2s ease-out;/* doesnt have any delay */
+}
+
+
+.control-group {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls-left,
+.controls-right {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  top: 40px;
+}
+
+/* Progress Bar */
+.progress-range {
+/* 8*  */
+  height: 8px;
+
+/* 9* */
+  /* width: 100%; */
+  /* 102 to have the progress range not as tall as the video screen he uses this (calc(100% - 30px)) from a website*/
+  width: calc(100% - 30px);
+  /* kaka, rgba this a here is the opacity so leann please */
+  background: rgba(202, 202, 202, 0.5);
+
+  margin: auto;
+  border-radius: 10px;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  cursor: pointer;
+  /*10a  when we hover over this progression bar we wanto look abit bigger*/
+  transition: height 0.1s ease-in-out;
+
+}
+/* 10b */
+.progress-range:hover {
+ height: 10px;
+}
+
+
+
+.progress-bar {
+  background: var(--primary-color);
+  width: 20%;  /* kaka this is width of the progress bas, like how far the video has been through. But we do this dynamically using JavaScript*/
+  height: 100%;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+/* Left Controls -------------------------- */
+
+.controls-left {
+  justify-content: flex-start;
+  margin-left: 15px;
+}
+
+/* Play & Pause */
+.play-controls {
+  margin-right: 15px;
+}
+
+.fa-play:hover,
+.fa-pause:hover {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* Volume */
+.volume-icon {
+  cursor: pointer;
+}
+
+.volume-range {
+  height: 8px;
+  width: 100px;
+  background: rgba(70, 70, 70, 0.5);
+  border-radius: 10px;
+  position: relative;
+  top: -21px;
+  left: 50px;
+  cursor: pointer;
+}
+
+.volume-bar {
+  background: var(--font-color);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.2s ease-in;
+}
+
+.volume-bar:hover {
+  background: var(--primary-color);
+}
+
+/* Right Controls ---------------------------- */
+.controls-right {
+  justify-content: flex-end;
+  margin-right: 15px;
+}
+
+.speed,
+.time {
+  position: relative;
+  top: 10px;
+}
+
+/* Playback Speed */
+.speed {
+  margin-right: 15px;
+}
+
+/* 11*, when we hoverover  (select) and (option of speed), we need the cuorser to be like somth like hand for clicking  */
+select, /* is the one which has options of speed */
+option {
+  cursor: pointer;
+}
+
+/* 12* */
+select:focus {
+  outline: none;
+}
+
+select {
+  background: transparent; /* 13* */
+  color: var(--font-color);
+  border: none;
+  font-size: 18px;
+  position: relative;
+  top: -2.5px;
+  border-radius: 5px;
+}
+
+
+
+select > option {
+  background: rgba(0, 0, 0, 0.9);
+  border: none;
+  font-size: 14px;
+}
+
+/* Elapsed Time & Duration */
+.time {
+  margin-right: 15px;
+  color: var(--font-color);
+  font-weight: bold;
+  user-select: none;
+}
+
+/* Fullscreen */
+.fullscreen {
+  cursor: pointer;
+}
+
+.video-fullscreen {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+/*  */
+/* 4* Media Query: Large Smartphone (Vertical) */
+@media screen and (max-width: 600px) {
+  .player {
+    min-width: 0; /* to make it fit the mobile size */
+    max-width: 95vw; /*  Iphone width is 375 px, so we have make this number bigger to cover a bigger portion on mobile screen*/
+  }
+
+
+  .fas {
+    font-size: 20px;
+  }
+
+  .controls-container {
+    height: 50px;
+  }
+
+  .control-group {
+    position: relative;
+    top: -25px;
+  }
+
+  .progress-range {
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+
+  .progress-bar {
+    border-radius: 0;
+  }
+
+  .volume-range {
+    width: 50px;
+    left: 30px;
+    top: -15px;
+  }
+
+  .speed,
+  .time {
+    top: 3px;
+  }
+
+  select {
+    font-size: 12px;
+  }
+
+  .time {
+    font-size: 12px;
+  }
+}
+
+
+/*  Media Query: Large Smartphone (Horizontal) */
+@media screen and (max-width: 900px) and (max-height: 500px) {
+  .player {
+    max-height: 95vh;
+    max-width: auto;
+  }
+
+  video {
+    height: 95vh;
+    object-fit: cover;
+  }
+
+  .video-fullscreen {
+    height: 97.5vh;
+    border-radius: 0;
+  }
+}
